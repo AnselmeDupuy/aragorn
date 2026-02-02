@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+    --color-parchment: #f4e8d0;
+    --color-parchment-dark: #e8d5b7;
+    --color-ink: #2c1810;
+    --color-ink-faded: #5c4a3a;
+    --color-gold: #d4af37;
+    --color-gold-dark: #b8941f;
+    --color-red: #8b0000;
+    --color-green: #2d5016;
+    --color-shadow: rgba(44, 24, 16, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Crimson Text', serif;
+    background: linear-gradient(135deg, #2c1810 0%, #4a3428 100%);
+    color: var(--color-ink);
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+header {
+    background: var(--color-parchment);
+    border-bottom: 4px solid var(--color-gold);
+    box-shadow: 0 4px 20px var(--color-shadow);
+    position: relative;
+    z-index: 10;
+}
+
+.banner {
+    background: linear-gradient(180deg, var(--color-parchment) 0%, var(--color-parchment-dark) 100%);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    border-bottom: 2px solid var(--color-gold);
+}
+
+.banner::before,
+.banner::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 50px;
+    top: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
+}
+
+.banner::before {
+    left: 0;
+}
+
+.banner::after {
+    right: 0;
+    transform: scaleX(-1);
+}
+
+.banner h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    text-shadow: 2px 2px 4px rgba(212, 175, 55, 0.3);
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.user-info {
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-info span {
+    font-size: 1.1rem;
+    color: var(--color-ink);
+    font-weight: 600;
+}
+
+.btn-logout {
+    padding: 0.5rem 1rem;
+    background: var(--color-red);
+    color: var(--color-parchment);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-ink);
+}
+
+.btn-logout:hover {
+    background: #a00000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--color-shadow);
+}
+
+nav {
+    background: var(--color-parchment-dark);
+    padding: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    position: relative;
+}
+
+nav a {
+    display: block;
+    padding: 1rem 2rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Cinzel', serif;
+    transition: all 0.3s ease;
+    border-right: 1px solid rgba(44, 24, 16, 0.2);
+    position: relative;
+}
+
+nav li:last-child a {
+    border-right: none;
+}
+
+nav a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--color-gold);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+nav a:hover::before,
+nav a.active::before {
+    width: 80%;
+}
+
+nav a:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--color-gold-dark);
+}
+
+nav a.active {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--color-gold-dark);
+}
+
+.messages {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.message {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background: var(--color-parchment);
+    border: 3px solid;
+    box-shadow: 0 4px 12px var(--color-shadow);
+    position: relative;
+}
+
+.message::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 8px;
+    opacity: 0.3;
+}
+
+.message.success {
+    border-color: var(--color-green);
+    background: linear-gradient(135deg, #f4e8d0 0%, #e8f5e0 100%);
+}
+
+.message.error {
+    border-color: var(--color-red);
+    background: linear-gradient(135deg, #f4e8d0 0%, #f5e0e0 100%);
+}
+
+.message.info {
+    border-color: var(--color-gold);
+    background: linear-gradient(135deg, #f4e8d0 0%, #f5f0e0 100%);
+}
+
+.message p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--color-ink);
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+footer {
+    background: var(--color-parchment);
+    border-top: 4px solid var(--color-gold);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+    box-shadow: 0 -4px 20px var(--color-shadow);
+    position: relative;
+    z-index: 10;
+}
+
+footer p {
+    margin: 0;
+    color: var(--color-ink-faded);
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-gold);
+    color: var(--color-ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-family: 'Cinzel', serif;
+    border-radius: 6px;
+    border: 2px solid var(--color-ink);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 8px var(--color-shadow);
+}
+
+.btn-primary:hover {
+    background: var(--color-gold-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px var(--color-shadow);
+}
+
+.btn-disabled {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #ccc;
+    color: #666;
+    font-weight: 600;
+    font-family: 'Cinzel', serif;
+    border-radius: 6px;
+    border: 2px solid #999;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+    .banner h1 {
+        font-size: 1.8rem;
+    }
+    
+    .user-info {
+        position: static;
+        transform: none;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    
+    nav ul {
+        flex-direction: column;
+    }
+    
+    nav a {
+        border-right: none;
+        border-bottom: 1px solid rgba(44, 24, 16, 0.2);
+    }
+}
