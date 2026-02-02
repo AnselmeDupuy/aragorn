@@ -14,4 +14,12 @@ public class ArmurerieService {
         return armurerieRepository.findById(id).orElse(new Armurerie());
     }
 
+    public Armurerie saveArmurerie(Armurerie armurerie) {
+        return armurerieRepository.save(armurerie);
+    }
+
+    public void deleteArmurerie(Integer id) {
+        armurerieRepository.deleteById(id);
+    }
+
 }
