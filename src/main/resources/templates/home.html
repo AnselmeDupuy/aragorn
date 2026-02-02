@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cour du château - Château de Valdrak</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+    <header>
+        <div class="banner">
+            <h1>Château de Valdrak</h1>
+            <div class="user-info" th:if="${session.chevalier}">
+                <span th:text="${session.chevalier.nom}">Chevalier</span>
+                <a th:href="@{/logout}" class="btn-logout">Quitter</a>
+            </div>
+        </div>
+        
+        <nav th:if="${session.chevalier}">
+            <ul>
+                <li><a th:href="@{/}" class="active">Cour du château</a></li>
+                <li><a th:href="@{/armurerie}">Armurerie</a></li>
+                <li><a th:href="@{/champ-de-bataille}">Champ de bataille</a></li>
+                <li><a th:href="@{/taverne}">Taverne</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="messages">
+        <div class="message success" th:if="${successMessage}">
+            <p><strong>Le gardien :</strong> <span th:text="${successMessage}"></span></p>
+        </div>
+    </div>
+    
+    <main class="courtyard">
+        <section class="welcome-section">
+            <h2>Bienvenue dans la cour du château</h2>
+            <p class="guardian-greeting" th:if="${session.chevalier}">
+                <strong>Le gardien vous reconnaît, chevalier <span th:text="${session.chevalier.nom}"></span>. Vous pouvez entrer.</strong>
+            </p>
+        </section>
+        
+        <section class="castle-areas">
+            <h3>Où souhaitez-vous vous rendre ?</h3>
+            
+            <div class="areas-grid">
+                <article class="area-card" th:classappend="${!session.chevalier} ? 'disabled' : ''">
+                    <h4>L'Armurerie</h4>
+                    <p>Équipez-vous pour le combat</p>
+                    <a th:href="@{/armurerie}" class="btn-primary" th:if="${session.chevalier}">Entrer</a>
+                    <span class="btn-disabled" th:unless="${session.chevalier}">Accès réservé</span>
+                </article>
+                
+                <article class="area-card" th:classappend="${!session.chevalier or !session.chevalier.estEquipe} ? 'disabled' : ''">
+                    <h4>Champ de bataille</h4>
+                    <p>Affrontez vos ennemis</p>
+                    <a th:href="@{/champ-de-bataille}" class="btn-primary" th:if="${session.chevalier and session.chevalier.estEquipe}">Entrer</a>
+                    <span class="btn-disabled" th:unless="${session.chevalier and session.chevalier.estEquipe}">Équipement requis</span>
+                </article>
+                
+                <article class="area-card">
+                    <h4>La Taverne</h4>
+                    <p>Détendez-vous et reposez-vous</p>
+                    <a th:href="@{/taverne}" class="btn-primary">Entrer</a>
+                </article>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Château de Valdrak - Tous droits réservés au Roi</p>
+    </footer>
+    
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>
