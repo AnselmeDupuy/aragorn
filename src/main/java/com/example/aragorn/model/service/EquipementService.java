@@ -20,4 +20,11 @@ public class EquipementService {
         return equipementRepository.findById(id).orElse(new Equipement());
     }
 
+    public Equipement saveEquipement(Equipement equipement) {
+        return equipementRepository.save(equipement);
+    }
+
+    public void deleteEquipement(Integer id) {
+        equipementRepository.deleteById(id);
+    }
 }

@@ -20,6 +20,11 @@ public class ChevalierService {
         return chevalierRepository.findAll();
     }
 
-    
+    public Chevalier saveChevalier(Chevalier chevalier) {
+        return chevalierRepository.save(chevalier);
+    }
 
+    public void deleteChevalier(Integer id) {
+        chevalierRepository.deleteById(id);
+    }
 }
