@@ -35,3 +35,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Project Specific ###
+pom.xml
+src/main/resources/application.properties
