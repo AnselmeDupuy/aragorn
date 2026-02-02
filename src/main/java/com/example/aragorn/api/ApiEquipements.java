@@ -1,27 +1,35 @@
 package com.example.aragorn.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.example.aragorn.model.DTO.EquipementDTO;
+import com.example.aragorn.model.entity.Equipement;
+import com.example.aragorn.model.service.EquipementService;
 
-
-@Controller
+@RestController
 @RequestMapping("/api/equipements")
 public class ApiEquipements {
+    @Autowired private EquipementService equipementService;
 
     @GetMapping
-    public List<Equipement> getAllEquipements(Model model) {
-        List<Equipement> equipements = EquipementService.selectAll();
-        return equipements;
+    public List<EquipementDTO> getAllEquipements() {
+        List<Equipement> equipement = equipementService.getAllEquipements();
+        List<EquipementDTO> equipementDTO = new ArrayList<>();
+        equipementDTO = equipement.stream().map(EquipementDTO::new).toList();
+        return equipementDTO;
     }
     
-    @GetMapping("/{equipement-id}")
-    public Equipement getEquipementById(@PathVariable Integer equipement-id) {
-        return EquipementService.selectEquipementById(equipement-id);
+    @GetMapping("/{equipementId}")
+    public EquipementDTO getEquipementById(@PathVariable Integer equipementId) {
+        Equipement equipement = equipementService.gEquipementById(equipementId);
+        EquipementDTO equipementDTO = new EquipementDTO(equipement);
+        return equipementDTO;
     }
 }
