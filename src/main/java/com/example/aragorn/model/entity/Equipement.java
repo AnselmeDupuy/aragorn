@@ -27,5 +27,6 @@ public class Equipement {
 
     @ManyToOne
     @JoinColumn(name = "armurerie_id")
-    private Set<Armurerie> armurerie;
+    private Armurerie armurerie;
+
 }
