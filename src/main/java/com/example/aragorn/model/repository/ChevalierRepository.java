@@ -1,5 +1,9 @@
 package com.example.aragorn.model.repository;
 
-public interface ChevalierRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.aragorn.model.entity.Chevalier;
+
+public interface ChevalierRepository extends JpaRepository<Chevalier, Integer> {
 
 }
