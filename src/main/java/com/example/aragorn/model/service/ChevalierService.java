@@ -11,8 +11,11 @@ import com.example.aragorn.model.repository.ChevalierRepository;
 
 @Service
 public class ChevalierService {
-    @Autowired private ChevalierRepository chevalierRepository;
-    @Autowired PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ChevalierRepository chevalierRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public Chevalier getChevalierById(Integer id) {
         return chevalierRepository.findById(id).orElse(new Chevalier());
@@ -32,7 +35,6 @@ public class ChevalierService {
 
     public void registerChevalier(Chevalier chevalier) {
         chevalier.setPassword(passwordEncoder.encode(chevalier.getPassword()));
-        chevalier.addRole("ROLE_CHEVALIER");
         chevalierRepository.save(chevalier);
     }
 
