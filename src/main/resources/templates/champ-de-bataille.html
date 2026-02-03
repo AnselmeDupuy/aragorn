@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Champ de Bataille - Royaume d'Aragorn</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/animations.css}" rel="stylesheet">
+    <style>
+        .page-content {
+            background: linear-gradient(135deg, #faf3e0 0%, #f4e4bc 50%, #e8d5a3 100%);
+            border: 4px solid #654321;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .page-content::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid #8b6914;
+            border-radius: 6px;
+            pointer-events: none;
+        }
+        h1 { color: #3d2914; }
+
+        /* Battle Arena */
+        .battle-arena {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 30px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .combatant {
+            background: linear-gradient(145deg, #e8d5a3 0%, #d4c4a0 100%);
+            border: 3px solid #5c3d2e;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+        .combatant.ally {
+            border-color: #2d4a2d;
+            box-shadow: 0 0 20px rgba(45, 74, 45, 0.3);
+        }
+        .combatant.enemy {
+            border-color: #8b0000;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+        }
+        .combatant h3 {
+            font-family: 'Cinzel', serif;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #3d2914;
+        }
+        .combatant-stats p {
+            margin: 8px 0;
+            color: #2c1810;
+        }
+        .combatant-stats strong {
+            font-family: 'Cinzel', serif;
+            color: #3d2914;
+        }
+
+        .health-bar {
+            width: 100%;
+            height: 25px;
+            background: #3d2914;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 2px solid #5c3d2e;
+        }
+        .health-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        .health-fill.ally {
+            background: linear-gradient(90deg, #2d4a2d, #4a7a4a);
+        }
+        .health-fill.enemy {
+            background: linear-gradient(90deg, #8b0000, #b22222);
+        }
+
+        /* Battle Actions */
+        .battle-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .btn-battle {
+            padding: 15px 25px;
+            border: 3px solid;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .btn-attack {
+            background: linear-gradient(135deg, #8b0000, #6b0000);
+            color: #f4e4bc;
+            border-color: #4a0000;
+        }
+        .btn-attack:hover {
+            background: linear-gradient(135deg, #a00000, #8b0000);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.5);
+        }
+        .btn-defend {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: #f4e4bc;
+            border-color: #0a3d91;
+        }
+        .btn-defend:hover {
+            background: linear-gradient(135deg, #1976d2, #1565c0);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(21, 101, 192, 0.5);
+        }
+        .btn-special {
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: #3d2914;
+            border-color: #8b6914;
+        }
+        .btn-special:hover {
+            background: linear-gradient(135deg, #f4d03f, #d4af37);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Battle Log */
+        .battle-log {
+            background: linear-gradient(145deg, #3d2914 0%, #2c1810 100%);
+            border: 3px solid #5c3d2e;
+            border-radius: 10px;
+            padding: 25px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .battle-log h2 {
+            color: #d4af37;
+            border-bottom-color: #5c3d2e;
+            font-size: 1.3rem;
+        }
+        .log-entries { margin-top: 15px; }
+        .log-entry {
+            padding: 10px 15px;
+            border-bottom: 1px solid #5c3d2e;
+            font-size: 0.95rem;
+            color: #f4e4bc;
+            font-family: 'Crimson Text', serif;
+        }
+        .log-entry:last-child { border-bottom: none; }
+        .log-entry.damage { color: #ff6b6b; }
+        .log-entry.heal { color: #69db7c; }
+        .log-entry.info { color: #74c0fc; }
+
+        @media (max-width: 768px) {
+            .battle-arena {
+                grid-template-columns: 1fr;
+            }
+            .battle-actions {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/flash :: messages}"></div>
+
+    <div class="container">
+        <a th:href="@{/}" class="back-link">&larr; Retour au chateau</a>
+
+        <div class="page-content">
+            <h1 class="fade-in">&#128737; Champ de Bataille</h1>
+
+            <!-- Battle Arena -->
+            <section class="battle-arena">
+                <div class="combatant ally slide-in-left">
+                    <h3>&#9876; Votre Chevalier</h3>
+                    <div class="combatant-stats">
+                        <p><strong>Aragorn</strong></p>
+                        <div class="health-bar">
+                            <div class="health-fill ally" id="ally-health" style="width: 85%"></div>
+                        </div>
+                        <p>PV: <span id="ally-pv">85</span> / 100</p>
+                        <p>Attaque: 25 | Defense: 15</p>
+                    </div>
+                </div>
+
+                <div class="battle-actions fade-in">
+                    <button class="btn-battle btn-attack pulse" onclick="attack()">&#9876; Attaquer</button>
+                    <button class="btn-battle btn-defend" onclick="defend()">&#128737; Defendre</button>
+                    <button class="btn-battle btn-special" onclick="special()">&#9889; Special</button>
+                </div>
+
+                <div class="combatant enemy slide-in-right">
+                    <h3>&#128128; Ennemi</h3>
+                    <div class="combatant-stats">
+                        <p><strong>Orc Guerrier</strong></p>
+                        <div class="health-bar">
+                            <div class="health-fill enemy" id="enemy-health" style="width: 100%"></div>
+                        </div>
+                        <p>PV: <span id="enemy-pv">100</span> / 100</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Battle Log -->
+            <section class="battle-log">
+                <h2>&#128220; Journal de Combat</h2>
+                <div class="log-entries" id="battle-log">
+                    <p class="log-entry info fade-in">&#9876; Le combat commence! Que la lumiere vous guide...</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script th:src="@{/js/animations.js}"></script>
+    <script>
+        let allyPv = 85;
+        let enemyPv = 100;
+        let isDefending = false;
+
+        function addLogEntry(message, type) {
+            const log = document.getElementById('battle-log');
+            const entry = document.createElement('p');
+            entry.className = `log-entry ${type} fade-in`;
+            entry.textContent = message;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function updateHealth() {
+            document.getElementById('ally-health').style.width = allyPv + '%';
+            document.getElementById('ally-pv').textContent = allyPv;
+            document.getElementById('enemy-health').style.width = enemyPv + '%';
+            document.getElementById('enemy-pv').textContent = enemyPv;
+        }
+
+        function enemyAttack() {
+            if (enemyPv <= 0) return;
+
+            setTimeout(() => {
+                let damage = Math.floor(Math.random() * 15) + 5;
+                if (isDefending) {
+                    damage = Math.floor(damage / 2);
+                    addLogEntry(`L'Orc attaque mais votre defense reduit les degats a ${damage}!`, 'info');
+                    isDefending = false;
+                } else {
+                    addLogEntry(`L'Orc Guerrier riposte et inflige ${damage} degats!`, 'damage');
+                }
+                allyPv = Math.max(0, allyPv - damage);
+                updateHealth();
+
+                if (allyPv <= 0) {
+                    addLogEntry('Defaite... Votre chevalier est tombe au combat.', 'damage');
+                }
+            }, 800);
+        }
+
+        function attack() {
+            if (enemyPv <= 0 || allyPv <= 0) return;
+
+            const damage = Math.floor(Math.random() * 20) + 15;
+            addLogEntry(`Aragorn attaque avec force et inflige ${damage} degats!`, 'damage');
+            enemyPv = Math.max(0, enemyPv - damage);
+            updateHealth();
+
+            if (enemyPv <= 0) {
+                addLogEntry('Victoire! L\'ennemi est vaincu! Gloire au Gondor!', 'info');
+            } else {
+                enemyAttack();
+            }
+        }
+
+        function defend() {
+            if (enemyPv <= 0 || allyPv <= 0) return;
+
+            isDefending = true;
+            addLogEntry('Aragorn leve son bouclier et se prepare a parer le prochain coup.', 'info');
+            enemyAttack();
+        }
+
+        function special() {
+            if (enemyPv <= 0 || allyPv <= 0) return;
+
+            const damage = Math.floor(Math.random() * 25) + 30;
+            addLogEntry(`Aragorn invoque le pouvoir des Dunedain! Attaque devastatrice de ${damage} degats!`, 'damage');
+            enemyPv = Math.max(0, enemyPv - damage);
+            updateHealth();
+
+            if (enemyPv <= 0) {
+                addLogEntry('Victoire eclatante! Votre ennemi est terrasse!', 'info');
+            } else {
+                enemyAttack();
+            }
+        }
+    </script>
+</body>
+</html>

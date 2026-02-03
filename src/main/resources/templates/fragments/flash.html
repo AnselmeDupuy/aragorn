@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Flash Messages Fragment - Medieval Theme -->
+<div th:fragment="messages" class="flash-container">
+
+    <!-- Success Message -->
+    <div th:if="${successMessage}" class="flash-message flash-success slide-in-down">
+        <span class="flash-icon">&#10003;</span>
+        <span th:text="${successMessage}">Operation reussie!</span>
+        <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
+    </div>
+
+    <!-- Error Message -->
+    <div th:if="${errorMessage}" class="flash-message flash-error slide-in-down">
+        <span class="flash-icon">&#10007;</span>
+        <span th:text="${errorMessage}">Une erreur est survenue.</span>
+        <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
+    </div>
+
+    <!-- Warning Message -->
+    <div th:if="${warningMessage}" class="flash-message flash-warning slide-in-down">
+        <span class="flash-icon">&#9888;</span>
+        <span th:text="${warningMessage}">Attention!</span>
+        <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
+    </div>
+
+    <!-- Info Message -->
+    <div th:if="${infoMessage}" class="flash-message flash-info slide-in-down">
+        <span class="flash-icon">&#8505;</span>
+        <span th:text="${infoMessage}">Information.</span>
+        <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
+    </div>
+
+    <style>
+        .flash-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .flash-message {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 15px;
+            background: linear-gradient(135deg, #f4e4bc 0%, #e8d5a3 100%);
+            color: #2c1810;
+            border: 3px solid #5c3d2e;
+            position: relative;
+        }
+
+        .flash-message::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px solid #8b6914;
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .flash-success {
+            border-color: #2d4a2d;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        .flash-success .flash-icon {
+            color: #2d4a2d;
+        }
+
+        .flash-error {
+            border-color: #8b0000;
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+        }
+
+        .flash-error .flash-icon {
+            color: #8b0000;
+        }
+
+        .flash-warning {
+            border-color: #b8860b;
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+        }
+
+        .flash-warning .flash-icon {
+            color: #b8860b;
+        }
+
+        .flash-info {
+            border-color: #1565c0;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        .flash-info .flash-icon {
+            color: #1565c0;
+        }
+
+        .flash-icon {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .flash-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: #5c3d2e;
+            font-size: 22px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            padding: 0 5px;
+        }
+
+        .flash-close:hover {
+            opacity: 1;
+        }
+
+        /* Animation */
+        .flash-message.dismissing {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(100%); }
+        }
+
+        @media (max-width: 480px) {
+            .flash-container {
+                left: 10px;
+                right: 10px;
+                max-width: none;
+            }
+        }
+    </style>
+</div>
+
+</html>

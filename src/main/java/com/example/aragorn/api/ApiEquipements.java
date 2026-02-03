@@ -16,7 +16,9 @@ import com.example.aragorn.model.service.EquipementService;
 @RestController
 @RequestMapping("/api/equipements")
 public class ApiEquipements {
-    @Autowired private EquipementService equipementService;
+
+    @Autowired
+    private EquipementService equipementService;
 
     @GetMapping
     public List<EquipementDTO> getAllEquipements() {
@@ -25,10 +27,10 @@ public class ApiEquipements {
         equipementDTO = equipement.stream().map(EquipementDTO::new).toList();
         return equipementDTO;
     }
-    
+
     @GetMapping("/{equipementId}")
     public EquipementDTO getEquipementById(@PathVariable Integer equipementId) {
-        Equipement equipement = equipementService.gEquipementById(equipementId);
+        Equipement equipement = equipementService.getEquipementById(equipementId);
         EquipementDTO equipementDTO = new EquipementDTO(equipement);
         return equipementDTO;
     }

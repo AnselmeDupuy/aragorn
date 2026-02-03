@@ -9,6 +9,7 @@ import lombok.Data;
 
 @Data
 public class EquipementDTO {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

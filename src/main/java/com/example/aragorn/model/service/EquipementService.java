@@ -10,18 +10,35 @@ import com.example.aragorn.model.repository.EquipementRepository;
 
 @Service
 public class EquipementService {
-    @Autowired private EquipementRepository equipementRepository;
 
-    public List<Equipement>  getAllEquipements() {
+    @Autowired
+    private EquipementRepository equipementRepository;
+
+    public List<Equipement> getAllEquipements() {
         return equipementRepository.findAll();
     }
 
-    public Equipement gEquipementById(Integer id) {
+    public Equipement getEquipementById(Integer id) {
         return equipementRepository.findById(id).orElse(new Equipement());
     }
 
     public Equipement saveEquipement(Equipement equipement) {
         return equipementRepository.save(equipement);
+    }
+
+    public Equipement save(Equipement equipement) {
+        return equipementRepository.save(equipement);
+    }
+
+    public void addEquipementToChevalier(Integer chevalierId, Integer equipementId) {
+        // Check if equipment is already equipped
+        if (equipementRepository.isEquipmentEquipped(chevalierId, equipementId) == 0) {
+            equipementRepository.addEquipementToChevalier(chevalierId, equipementId);
+        }
+    }
+
+    public void removeEquipementFromChevalier(Integer chevalierId, Integer equipementId) {
+        equipementRepository.removeEquipementFromChevalier(chevalierId, equipementId);
     }
 
     public void deleteEquipement(Integer id) {

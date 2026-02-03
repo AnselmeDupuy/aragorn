@@ -14,6 +14,7 @@ import lombok.Data;
 @Entity
 @Data
 public class Equipement {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

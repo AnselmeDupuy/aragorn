@@ -60,7 +60,7 @@ public class SecurityConfig {
                 .usernameParameter("name") // Le chevalier se connecte avec son "name"
                 .passwordParameter("password") // Le formulaire utilise "password"
                 .permitAll()
-                .defaultSuccessUrl("/chevalier/dashboard", true)
+                .defaultSuccessUrl("/home", true)
                 .failureUrl("/login?error")
                 )
                 // ===== GESTION DE LA DÉCONNEXION =====
