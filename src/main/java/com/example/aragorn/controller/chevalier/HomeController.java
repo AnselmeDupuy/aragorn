@@ -24,21 +24,27 @@ public class HomeController {
     @Autowired
     private ChevalierService chevalierService;
 
-    @GetMapping("/")
-    public String home(Model model, Principal principal) {
+    @GetMapping("/home")
+    public String home(Model model, Principal principal, HttpSession session) {
         System.out.println("=== HOME PAGE ACCESSED ===");
-        // if (principal != null) {
-        //     System.out.println("User authenticated: " + principal.getName());
-        //     // Get the authenticated chevalier's name
-        //     String chevalierName = principal.getName();
-        //     Chevalier chevalier = chevalierService.getChevalierByName(chevalierName);
-        //     if (chevalier != null && chevalier.getId() > 0) {
-        //         System.out.println("Chevalier loaded: " + chevalier.getName());
-        //         model.addAttribute("chevalier", chevalier);
-        //     }
-        // } else {
-        //     System.out.println("No authenticated user");
-        // }
+        if (principal != null) {
+            System.out.println("User authenticated: " + principal.getName());
+            // Get the authenticated chevalier's name
+            String chevalierName = principal.getName();
+            Chevalier chevalier = chevalierService.getChevalierByName(chevalierName);
+            if (chevalier != null && chevalier.getId() > 0) {
+                System.out.println("Chevalier loaded: " + chevalier.getName());
+                
+                // Store in session
+                session.setAttribute("chevalierName", chevalier.getName());
+                session.setAttribute("chevalierRoles", chevalier.getRoles());
+                session.setAttribute("chevalier", chevalier);
+                
+                model.addAttribute("chevalier", chevalier);
+            }
+        } else {
+            System.out.println("No authenticated user");
+        }
         return "home";
     }
 
@@ -49,7 +55,7 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
             System.out.println("Already authenticated, redirecting to home");
-            return "redirect:/api/chevaliers";
+            return "redirect:/";
         }
         return "login";
     }
@@ -70,7 +76,7 @@ public class HomeController {
         model.addAttribute("chevalier", chevalier);
         chevalierService.registerChevalier(chevalier);
         
-        return "login";
+        return "home";
     }
     
     
