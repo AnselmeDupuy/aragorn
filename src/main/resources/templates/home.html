@@ -1,11 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
+<main xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: layout(~{::content}, ~{::css})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/home.css}">
+    </th:block>
 </head>
 <body>
-    
+    <th:block th:fragment="content">
+
+    <div class="courtyard">
+        <section class="welcome-section">
+            <h2>Bienvenue dans la cour du château</h2>
+            <p class="guardian-greeting" th:if="${session.chevalier}">
+                <strong>Le gardien vous reconnaît, chevalier <span th:text="${session.chevalier.nom}"></span>. Vous pouvez entrer.</strong>
+            </p>
+        </section>
+        
+        <section class="castle-areas">
+            <h3>Où souhaitez-vous vous rendre ?</h3>
+            
+            <div class="areas-grid">
+                <article class="area-card" th:classappend="${session.chevalier == null} ? 'disabled' : ''">
+                    <h4>L'Armurerie</h4>
+                    <p>Équipez-vous pour le combat</p>
+                    <a th:href="@{/armurerie}" class="btn-primary" th:if="${session.chevalier != null}">Entrer</a>
+                    <span class="btn-disabled" th:if="${session.chevalier == null}">Accès réservé</span>
+                </article>
+                
+                <article class="area-card" th:classappend="${session.chevalier == null or (session.chevalier.estEquipe != null and !session.chevalier.estEquipe)} ? 'disabled' : ''">
+                    <h4>Champ de bataille</h4>
+                    <p>Affrontez vos ennemis</p>
+                    <a th:href="@{/champ-de-bataille}" class="btn-primary" th:if="${session.chevalier != null and session.chevalier.estEquipe != null and session.chevalier.estEquipe}">Entrer</a>
+                    <span class="btn-disabled" th:if="${session.chevalier == null or session.chevalier.estEquipe == null or !session.chevalier.estEquipe}">Équipement requis</span>
+                </article>
+                
+                <article class="area-card">
+                    <h4>La Taverne</h4>
+                    <p>Détendez-vous et reposez-vous</p>
+                    <a th:href="@{/taverne}" class="btn-primary">Entrer</a>
+                </article>
+            </div>
+        </section>
+    </div>
+    </th:block>
 </body>
-</html>
+</main>

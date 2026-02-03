@@ -12,6 +12,10 @@ target/
 .settings
 .springBeans
 .sts4-cache
+pom.xml
+.mvn
+
+application.properties
 
 ### IntelliJ IDEA ###
 .idea
@@ -31,3 +35,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Project Specific ###
+pom.xml
+src/main/resources/application.properties
