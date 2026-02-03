@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrée du château - Château de Valdrak</title>
     <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
+
 <body class="login-page">
     <div class="login-container">
         <div class="castle-gate">
             <h1>Château de Valdrak</h1>
             <h2>Halte ! Qui va là ?</h2>
-            
+
             <div class="guardian-message">
                 <p><strong>Le gardien :</strong> Identifiez-vous, voyageur !</p>
             </div>
-            
+
             <div class="message error" th:if="${errorMessage}">
                 <p th:text="${errorMessage}"></p>
             </div>
-            
-            <form th:action="@{/login}" method="post" class="login-form">
+
+            <form th:action="@{/perform_login}" method="post" class="login-form">
                 <div class="form-group">
                     <label for="nom">Nom du chevalier</label>
-                    <input type="text" id="nom" name="nom" placeholder="Entrez votre nom" required>
+                    <input type="text" id="nom" name="name" placeholder="Entrez votre nom" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="motDePasse">Mot de passe</label>
-                    <input type="password" id="motDePasse" name="motDePasse" placeholder="Votre mot de passe" required>
+                    <input type="password" id="motDePasse" name="password" placeholder="Votre mot de passe" required>
                 </div>
-                
+
                 <button type="submit" class="btn-primary">Entrer dans le château</button>
             </form>
-            
+
             <div class="register-link">
                 <p>Nouveau chevalier ? <a th:href="@{/register}">S'enregistrer</a></p>
             </div>
         </div>
     </div>
-    
+
     <footer>
         <p>&copy; 2026 - Château de Valdrak</p>
     </footer>
 </body>
+
 </html>
