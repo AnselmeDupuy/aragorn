@@ -186,32 +186,6 @@
                 </div>
             </section>
 
-            <div class="equipment-form-section">
-                <h2>&#128220; Ajouter un Equipement</h2>
-                <form th:action="@{/armurerie/add}" method="post">
-                    <div class="form-group">
-                        <label for="nom">Nom de l'equipement</label>
-                        <input type="text" id="nom" name="nom" placeholder="Ex: Epee du Destin" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" rows="3" placeholder="Decrivez les proprietes de l'equipement..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="type">Type</label>
-                        <select id="type" name="type">
-                            <option value="arme">Arme</option>
-                            <option value="armure">Armure</option>
-                            <option value="accessoire">Accessoire</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="prix">Prix (pieces d'or)</label>
-                        <input type="number" id="prix" name="prix" min="0" placeholder="100" required>
-                    </div>
-                    <button type="submit" class="btn-primary">Forger l'equipement</button>
-                </form>
-            </div>
         </div>
     </div>
 
