@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taverne - Royaume d'Aragorn</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/animations.css}" rel="stylesheet">
+    <style>
+        .page-content {
+            background: linear-gradient(135deg, #faf3e0 0%, #f4e4bc 50%, #e8d5a3 100%);
+            border: 4px solid #654321;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .page-content::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid #8b6914;
+            border-radius: 6px;
+            pointer-events: none;
+        }
+        h1 { color: #3d2914; }
+        section { margin-bottom: 50px; }
+        section h2 {
+            color: #3d2914;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #5c3d2e;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: linear-gradient(145deg, #e8d5a3 0%, #d4c4a0 100%);
+            border: 3px solid #5c3d2e;
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            border: 1px solid #8b6914;
+            border-radius: 6px;
+            pointer-events: none;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+            border-color: #d4af37;
+        }
+        .card h3 {
+            color: #3d2914;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 12px;
+        }
+        .card p {
+            color: #2c1810;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        .price {
+            background: linear-gradient(135deg, #3d2914, #5c3d2e);
+            color: #d4af37;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        /* Mercenary Cards */
+        .mercenary-card {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .mercenary-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3d2914, #5c3d2e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            flex-shrink: 0;
+            border: 3px solid #d4af37;
+        }
+        .mercenary-info { flex: 1; }
+        .mercenary-info h3 { margin-bottom: 5px; }
+        .mercenary-info .classe {
+            color: #1565c0;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .mercenary-info .niveau {
+            color: #5c3d2e;
+            font-size: 0.9rem;
+        }
+
+        /* Quest Cards */
+        .quest-card.urgent {
+            border: 3px solid #d4af37;
+            animation: pulse 2s infinite;
+            background: linear-gradient(145deg, #f4e4bc 0%, #e8d5a3 100%);
+        }
+        .quest-reward {
+            background: linear-gradient(135deg, #3d2914, #2c1810);
+            color: #d4af37;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: 2px solid;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+        .btn-order {
+            background: linear-gradient(135deg, #2d4a2d, #1f3a1f);
+            color: #f4e4bc;
+            border-color: #1a2f1a;
+        }
+        .btn-order:hover {
+            background: linear-gradient(135deg, #3d5a3d, #2d4a2d);
+            transform: scale(1.05);
+        }
+        .btn-hire {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: #f4e4bc;
+            border-color: #0a3d91;
+        }
+        .btn-hire:hover {
+            background: linear-gradient(135deg, #1976d2, #1565c0);
+            transform: scale(1.05);
+        }
+        .btn-accept {
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: #3d2914;
+            border-color: #8b6914;
+        }
+        .btn-accept:hover {
+            background: linear-gradient(135deg, #f4d03f, #d4af37);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .mercenary-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/flash :: messages}"></div>
+
+    <div class="container">
+        <a th:href="@{/}" class="back-link">&larr; Retour au chateau</a>
+
+        <div class="page-content">
+            <h1 class="fade-in">&#127866; La Taverne du Dragon Dore</h1>
+
+            <!-- Tavern Menu -->
+            <section class="tavern-menu">
+                <h2>&#127860; Menu du Jour</h2>
+                <div class="card-grid">
+                    <div class="card fade-in">
+                        <h3>Ragout du Chasseur</h3>
+                        <p>Un copieux ragout de gibier mijote aux herbes de la foret</p>
+                        <span class="price">5 pieces d'or</span>
+                        <br>
+                        <button class="btn btn-order">Commander</button>
+                    </div>
+                    <div class="card fade-in">
+                        <h3>Hydromel des Elfes</h3>
+                        <p>Boisson douce et enivrante des terres immortelles</p>
+                        <span class="price">8 pieces d'or</span>
+                        <br>
+                        <button class="btn btn-order">Commander</button>
+                    </div>
+                    <div class="card fade-in">
+                        <h3>Pain de Lembas</h3>
+                        <p>Une seule bouchee suffit pour une journee de voyage</p>
+                        <span class="price">15 pieces d'or</span>
+                        <br>
+                        <button class="btn btn-order">Commander</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recruitment Section -->
+            <section class="recruitment">
+                <h2>&#9876; Mercenaires Disponibles</h2>
+                <div class="card-grid">
+                    <div class="card mercenary-card slide-in-up">
+                        <div class="mercenary-avatar">&#129399;</div>
+                        <div class="mercenary-info">
+                            <h3>Gimli</h3>
+                            <p class="classe">Guerrier Nain</p>
+                            <p class="niveau">Niveau 15</p>
+                            <span class="price">200 pieces d'or</span>
+                        </div>
+                        <button class="btn btn-hire">Recruter</button>
+                    </div>
+                    <div class="card mercenary-card slide-in-up">
+                        <div class="mercenary-avatar">&#129497;</div>
+                        <div class="mercenary-info">
+                            <h3>Legolas</h3>
+                            <p class="classe">Archer Elfe</p>
+                            <p class="niveau">Niveau 18</p>
+                            <span class="price">350 pieces d'or</span>
+                        </div>
+                        <button class="btn btn-hire">Recruter</button>
+                    </div>
+                    <div class="card mercenary-card slide-in-up">
+                        <div class="mercenary-avatar">&#129497;</div>
+                        <div class="mercenary-info">
+                            <h3>Gandalf</h3>
+                            <p class="classe">Mage Istari</p>
+                            <p class="niveau">Niveau ???</p>
+                            <span class="price">1000 pieces d'or</span>
+                        </div>
+                        <button class="btn btn-hire">Recruter</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rumors / Quests Board -->
+            <section class="quest-board">
+                <h2>&#128220; Tableau des Rumeurs</h2>
+                <div class="card-grid">
+                    <div class="card quest-card urgent">
+                        <h3>&#9888; URGENT: Les Mines de la Moria</h3>
+                        <p>Des creatures malfaisantes ont envahi les anciennes mines des nains. Nettoyez les galeries!</p>
+                        <div class="quest-reward">
+                            <strong>Recompense:</strong> 500 pieces d'or + Arme legendaire
+                        </div>
+                        <button class="btn btn-accept">Accepter la quete</button>
+                    </div>
+                    <div class="card quest-card fade-in">
+                        <h3>Escorte vers Fondcombe</h3>
+                        <p>Un marchand elfe cherche une escorte sure pour traverser les terres sauvages</p>
+                        <div class="quest-reward">
+                            <strong>Recompense:</strong> 150 pieces d'or
+                        </div>
+                        <button class="btn btn-accept">Accepter la quete</button>
+                    </div>
+                    <div class="card quest-card fade-in">
+                        <h3>Chasse au Warg</h3>
+                        <p>Une meute de Wargs terrorise les villages au nord. Eliminez la menace!</p>
+                        <div class="quest-reward">
+                            <strong>Recompense:</strong> 250 pieces d'or
+                        </div>
+                        <button class="btn btn-accept">Accepter la quete</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script th:src="@{/js/animations.js}"></script>
+    <script>
+        document.querySelectorAll('.btn-order').forEach(btn => {
+            btn.addEventListener('click', function() {
+                showFlashMessage('success', 'Commande passee! Votre repas arrive bientot.');
+            });
+        });
+
+        document.querySelectorAll('.btn-hire').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const name = this.closest('.mercenary-card').querySelector('h3').textContent;
+                showFlashMessage('success', `${name} a rejoint votre compagnie!`);
+            });
+        });
+
+        document.querySelectorAll('.btn-accept').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const quest = this.closest('.quest-card').querySelector('h3').textContent;
+                showFlashMessage('info', `Quete acceptee: ${quest}`);
+            });
+        });
+    </script>
+</body>
+</html>
