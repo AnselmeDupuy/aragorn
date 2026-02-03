@@ -14,8 +14,8 @@ public interface ChevalierRepository extends JpaRepository<Chevalier, Integer> {
     @Query("SELECT DISTINCT roles FROM Chevalier c")
     List<String> findDistinctRoles();
 
-    @Query("SELECT DISTINCT username FROM User u")
-    Chevalier findDistinctUserByUsername();
+    @Query("SELECT DISTINCT name FROM Chevalier u")
+    Chevalier findDistinctUserByName();
 
         
 

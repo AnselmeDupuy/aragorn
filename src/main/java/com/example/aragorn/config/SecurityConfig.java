@@ -29,8 +29,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                                             .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/error").permitAll()
                                             .requestMatchers("/home").authenticated()
-                                            .requestMatchers("/champ-de-bataille").hasRole("ROLE_CHEVALIER")
-                                            .requestMatchers("/armurerie").hasRole("ROLE_CHEVALIER")
+                                            .requestMatchers("/champ-de-bataille").hasRole("CHEVALIER")
+                                            .requestMatchers("/armurerie").hasRole("CHEVALIER")
                                             .anyRequest().authenticated()
         )
         .csrf(csrf -> csrf.disable())
