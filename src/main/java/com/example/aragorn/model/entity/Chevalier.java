@@ -1,5 +1,7 @@
 package com.example.aragorn.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -19,6 +21,17 @@ public class Chevalier {
     private int id;
 
     private String name;
+
+    private String password;
+
+    private List<String> roles = new ArrayList<>();
+
+    public void addRole(String role) {
+        if (this.roles == null) {
+            this.roles = new ArrayList<>();
+        }
+        this.roles.add(role);
+    }
 
     @ManyToMany
     @JoinTable(
