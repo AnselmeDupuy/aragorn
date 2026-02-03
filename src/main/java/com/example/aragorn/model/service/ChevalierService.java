@@ -11,6 +11,7 @@ import com.example.aragorn.model.repository.ChevalierRepository;
 
 @Service
 public class ChevalierService {
+
     @Autowired private ChevalierRepository chevalierRepository;
     @Autowired PasswordEncoder passwordEncoder;
 

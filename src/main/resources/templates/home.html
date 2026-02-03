@@ -1,38 +1,13 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<main xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: layout(~{::content}, ~{::css})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cour du château - Château de Valdrak</title>
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/home.css}">
+    </th:block>
 </head>
 <body>
-    <header>
-        <div class="banner">
-            <h1>Château de Valdrak</h1>
-            <div class="user-info" th:if="${session.chevalier}">
-                <span th:text="${session.chevalier.nom}">Chevalier</span>
-                <a th:href="@{/logout}" class="btn-logout">Quitter</a>
-            </div>
-        </div>
-        
-        <nav th:if="${session.chevalier}">
-            <ul>
-                <li><a th:href="@{/}" class="active">Cour du château</a></li>
-                <li><a th:href="@{/armurerie}">Armurerie</a></li>
-                <li><a th:href="@{/champ-de-bataille}">Champ de bataille</a></li>
-                <li><a th:href="@{/taverne}">Taverne</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <div class="messages">
-        <div class="message success" th:if="${successMessage}">
-            <p><strong>Le gardien :</strong> <span th:text="${successMessage}"></span></p>
-        </div>
-    </div>
-    
-    <main class="courtyard">
+    <th:block th:fragment="content">
+
+    <div class="courtyard">
         <section class="welcome-section">
             <h2>Bienvenue dans la cour du château</h2>
             <p class="guardian-greeting" th:if="${session.chevalier}">
@@ -44,18 +19,18 @@
             <h3>Où souhaitez-vous vous rendre ?</h3>
             
             <div class="areas-grid">
-                <article class="area-card" th:classappend="${!session.chevalier} ? 'disabled' : ''">
+                <article class="area-card" th:classappend="${session.chevalier == null} ? 'disabled' : ''">
                     <h4>L'Armurerie</h4>
                     <p>Équipez-vous pour le combat</p>
-                    <a th:href="@{/armurerie}" class="btn-primary" th:if="${session.chevalier}">Entrer</a>
-                    <span class="btn-disabled" th:unless="${session.chevalier}">Accès réservé</span>
+                    <a th:href="@{/armurerie}" class="btn-primary" th:if="${session.chevalier != null}">Entrer</a>
+                    <span class="btn-disabled" th:if="${session.chevalier == null}">Accès réservé</span>
                 </article>
                 
-                <article class="area-card" th:classappend="${!session.chevalier or !session.chevalier.estEquipe} ? 'disabled' : ''">
+                <article class="area-card" th:classappend="${session.chevalier == null or (session.chevalier.estEquipe != null and !session.chevalier.estEquipe)} ? 'disabled' : ''">
                     <h4>Champ de bataille</h4>
                     <p>Affrontez vos ennemis</p>
-                    <a th:href="@{/champ-de-bataille}" class="btn-primary" th:if="${session.chevalier and session.chevalier.estEquipe}">Entrer</a>
-                    <span class="btn-disabled" th:unless="${session.chevalier and session.chevalier.estEquipe}">Équipement requis</span>
+                    <a th:href="@{/champ-de-bataille}" class="btn-primary" th:if="${session.chevalier != null and session.chevalier.estEquipe != null and session.chevalier.estEquipe}">Entrer</a>
+                    <span class="btn-disabled" th:if="${session.chevalier == null or session.chevalier.estEquipe == null or !session.chevalier.estEquipe}">Équipement requis</span>
                 </article>
                 
                 <article class="area-card">
@@ -65,12 +40,7 @@
                 </article>
             </div>
         </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2026 - Château de Valdrak - Tous droits réservés au Roi</p>
-    </footer>
-    
-    <script th:src="@{/js/script.js}"></script>
+    </div>
+    </th:block>
 </body>
-</html>
+</main>
