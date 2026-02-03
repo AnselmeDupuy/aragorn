@@ -39,3 +39,4 @@ build/
 ### Project Specific ###
 pom.xml
 src/main/resources/application.properties
+src\main\java\com\example\aragorn\controller\HomeController.java
