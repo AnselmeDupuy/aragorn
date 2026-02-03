@@ -1,0 +1,404 @@
+/* ==========================================
+   ARAGORN - Medieval Fantasy Theme
+   Style: Parchemins, Pierre, Bois
+   Couleurs: Marron, Beige, Noir, Or
+   ========================================== */
+
+/* Import Medieval Font */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* ==========================================
+   CSS VARIABLES
+   ========================================== */
+:root {
+    /* Earth Colors */
+    --color-parchment: #f4e4bc;
+    --color-parchment-dark: #e8d5a3;
+    --color-parchment-light: #faf3e0;
+    --color-brown-dark: #3d2914;
+    --color-brown: #5c3d2e;
+    --color-brown-light: #8b6914;
+    --color-wood: #654321;
+    --color-wood-dark: #4a3728;
+    --color-stone: #4a4a4a;
+    --color-stone-light: #6b6b6b;
+    --color-gold: #d4af37;
+    --color-gold-light: #f4d03f;
+    --color-gold-dark: #b8860b;
+    --color-black: #1a1a1a;
+    --color-ink: #2c1810;
+    --color-blood: #8b0000;
+    --color-forest: #2d4a2d;
+
+    /* Fonts */
+    --font-title: 'Cinzel', Georgia, serif;
+    --font-body: 'Crimson Text', Georgia, serif;
+
+    /* Shadows */
+    --shadow-parchment: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --shadow-emboss: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================
+   BASE STYLES
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--color-ink);
+    min-height: 100vh;
+
+    /* Stone/Castle Wall Background */
+    background:
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a4a4a' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+        linear-gradient(135deg, #3d3d3d 0%, #2a2a2a 50%, #1f1f1f 100%);
+    background-attachment: fixed;
+}
+
+/* ==========================================
+   PARCHMENT CONTAINERS
+   ========================================== */
+.parchment {
+    background:
+        linear-gradient(135deg, var(--color-parchment-light) 0%, var(--color-parchment) 50%, var(--color-parchment-dark) 100%);
+    border: 3px solid var(--color-brown);
+    border-radius: 5px;
+    box-shadow:
+        var(--shadow-parchment),
+        inset 0 0 50px rgba(139, 105, 20, 0.1);
+    position: relative;
+}
+
+.parchment::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+    border-radius: 3px;
+}
+
+/* ==========================================
+   CONTAINER
+   ========================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ==========================================
+   TYPOGRAPHY
+   ========================================== */
+h1, h2, h3, h4 {
+    font-family: var(--font-title);
+    color: var(--color-brown-dark);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 2.8rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--color-gold-dark);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-brown);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h3 {
+    font-size: 1.3rem;
+    color: var(--color-brown-dark);
+}
+
+/* ==========================================
+   NAVIGATION LINK
+   ========================================== */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-parchment);
+    text-decoration: none;
+    font-family: var(--font-title);
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    background: var(--color-brown);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-brown-dark);
+}
+
+.back-link:hover {
+    background: var(--color-brown-dark);
+    transform: translateX(-5px);
+}
+
+/* ==========================================
+   CARDS - Wood Frame Style
+   ========================================== */
+.card {
+    background:
+        linear-gradient(135deg, var(--color-parchment-light) 0%, var(--color-parchment) 100%);
+    border: 4px solid var(--color-wood);
+    border-radius: 8px;
+    padding: 25px;
+    position: relative;
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        inset 0 0 30px rgba(139, 105, 20, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px solid var(--color-brown-light);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.5),
+        inset 0 0 30px rgba(139, 105, 20, 0.15);
+}
+
+.card h3 {
+    color: var(--color-brown-dark);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.card p {
+    color: var(--color-ink);
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+/* ==========================================
+   PRICE TAG
+   ========================================== */
+.price {
+    display: inline-block;
+    color: var(--color-gold-dark);
+    font-family: var(--font-title);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 5px 12px;
+    background: linear-gradient(135deg, var(--color-brown-dark), var(--color-wood));
+    border-radius: 15px;
+    margin: 10px 0;
+}
+
+/* ==========================================
+   BUTTONS - Medieval Style
+   ========================================== */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    font-family: var(--font-title);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
+    color: var(--color-brown-dark);
+    border: 2px solid var(--color-gold-dark);
+    box-shadow: var(--shadow-emboss);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, var(--color-brown), var(--color-wood-dark));
+    color: var(--color-parchment);
+    border: 2px solid var(--color-brown-dark);
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, var(--color-wood), var(--color-brown));
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--color-blood), #6b0000);
+    color: var(--color-parchment);
+    border: 2px solid #4a0000;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #a00000, var(--color-blood));
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--color-forest), #1f3a1f);
+    color: var(--color-parchment);
+    border: 2px solid #1a2f1a;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #3d5a3d, var(--color-forest));
+}
+
+/* ==========================================
+   FORMS - Parchment Style
+   ========================================== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--font-title);
+    font-weight: 600;
+    color: var(--color-brown-dark);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-ink);
+    background: var(--color-parchment-light);
+    border: 2px solid var(--color-brown);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* ==========================================
+   GRID LAYOUTS
+   ========================================== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* ==========================================
+   DECORATIVE ELEMENTS
+   ========================================== */
+.divider {
+    height: 3px;
+    background: linear-gradient(90deg,
+        transparent,
+        var(--color-brown) 20%,
+        var(--color-gold) 50%,
+        var(--color-brown) 80%,
+        transparent);
+    margin: 30px 0;
+}
+
+.ornament {
+    text-align: center;
+    color: var(--color-gold-dark);
+    font-size: 1.5rem;
+    margin: 20px 0;
+}
+
+/* ==========================================
+   SCROLLBAR - Medieval Style
+   ========================================== */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-stone);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-brown), var(--color-wood-dark));
+    border-radius: 6px;
+    border: 2px solid var(--color-stone);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(var(--color-wood), var(--color-brown));
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.4rem; }
+
+    .container { padding: 15px; }
+
+    .card { padding: 20px; }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+}
