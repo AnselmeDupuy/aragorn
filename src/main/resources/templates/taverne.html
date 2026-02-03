@@ -218,74 +218,6 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Recruitment Section -->
-            <section class="recruitment">
-                <h2>&#9876; Mercenaires Disponibles</h2>
-                <div class="card-grid">
-                    <div class="card mercenary-card slide-in-up">
-                        <div class="mercenary-avatar">&#129399;</div>
-                        <div class="mercenary-info">
-                            <h3>Gimli</h3>
-                            <p class="classe">Guerrier Nain</p>
-                            <p class="niveau">Niveau 15</p>
-                            <span class="price">200 pieces d'or</span>
-                        </div>
-                        <button class="btn btn-hire">Recruter</button>
-                    </div>
-                    <div class="card mercenary-card slide-in-up">
-                        <div class="mercenary-avatar">&#129497;</div>
-                        <div class="mercenary-info">
-                            <h3>Legolas</h3>
-                            <p class="classe">Archer Elfe</p>
-                            <p class="niveau">Niveau 18</p>
-                            <span class="price">350 pieces d'or</span>
-                        </div>
-                        <button class="btn btn-hire">Recruter</button>
-                    </div>
-                    <div class="card mercenary-card slide-in-up">
-                        <div class="mercenary-avatar">&#129497;</div>
-                        <div class="mercenary-info">
-                            <h3>Gandalf</h3>
-                            <p class="classe">Mage Istari</p>
-                            <p class="niveau">Niveau ???</p>
-                            <span class="price">1000 pieces d'or</span>
-                        </div>
-                        <button class="btn btn-hire">Recruter</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Rumors / Quests Board -->
-            <section class="quest-board">
-                <h2>&#128220; Tableau des Rumeurs</h2>
-                <div class="card-grid">
-                    <div class="card quest-card urgent">
-                        <h3>&#9888; URGENT: Les Mines de la Moria</h3>
-                        <p>Des creatures malfaisantes ont envahi les anciennes mines des nains. Nettoyez les galeries!</p>
-                        <div class="quest-reward">
-                            <strong>Recompense:</strong> 500 pieces d'or + Arme legendaire
-                        </div>
-                        <button class="btn btn-accept">Accepter la quete</button>
-                    </div>
-                    <div class="card quest-card fade-in">
-                        <h3>Escorte vers Fondcombe</h3>
-                        <p>Un marchand elfe cherche une escorte sure pour traverser les terres sauvages</p>
-                        <div class="quest-reward">
-                            <strong>Recompense:</strong> 150 pieces d'or
-                        </div>
-                        <button class="btn btn-accept">Accepter la quete</button>
-                    </div>
-                    <div class="card quest-card fade-in">
-                        <h3>Chasse au Warg</h3>
-                        <p>Une meute de Wargs terrorise les villages au nord. Eliminez la menace!</p>
-                        <div class="quest-reward">
-                            <strong>Recompense:</strong> 250 pieces d'or
-                        </div>
-                        <button class="btn btn-accept">Accepter la quete</button>
-                    </div>
-                </div>
-            </section>
         </div>
     </div>
 
@@ -297,19 +229,6 @@
             });
         });
 
-        document.querySelectorAll('.btn-hire').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const name = this.closest('.mercenary-card').querySelector('h3').textContent;
-                showFlashMessage('success', `${name} a rejoint votre compagnie!`);
-            });
-        });
-
-        document.querySelectorAll('.btn-accept').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const quest = this.closest('.quest-card').querySelector('h3').textContent;
-                showFlashMessage('info', `Quete acceptee: ${quest}`);
-            });
-        });
     </script>
 </body>
 </html>
