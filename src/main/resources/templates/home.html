@@ -10,8 +10,9 @@
     <div class="courtyard">
         <section class="welcome-section">
             <h2>Bienvenue dans la cour du château</h2>
-            <p class="guardian-greeting" th:if="${session.chevalier}">
-                <strong>Le gardien vous reconnaît, chevalier <span th:text="${session.chevalier.nom}"></span>. Vous pouvez entrer.</strong>
+            <p class="guardian-greeting" th:if="${session.chevalierName}">
+                <strong>Le gardien vous reconnaît, chevalier <span th:text="${session.chevalierName}"></span>.</strong>
+                <span th:if="${session.chevalierRoles}" th:text="' Rôle(s): ' + ${#strings.listJoin(session.chevalierRoles, ', ')}"></span>
             </p>
         </section>
         
@@ -19,18 +20,18 @@
             <h3>Où souhaitez-vous vous rendre ?</h3>
             
             <div class="areas-grid">
-                <article class="area-card" th:classappend="${session.chevalier == null} ? 'disabled' : ''">
+                <article class="area-card" th:classappend="${session.chevalierName == null} ? 'disabled' : ''">
                     <h4>L'Armurerie</h4>
                     <p>Équipez-vous pour le combat</p>
-                    <a th:href="@{/armurerie}" class="btn-primary" th:if="${session.chevalier != null}">Entrer</a>
-                    <span class="btn-disabled" th:if="${session.chevalier == null}">Accès réservé</span>
+                    <a th:href="@{/armurerie}" class="btn-primary" th:if="${session.chevalierName != null}">Entrer</a>
+                    <span class="btn-disabled" th:if="${session.chevalierName == null}">Accès réservé</span>
                 </article>
                 
-                <article class="area-card" th:classappend="${session.chevalier == null or (session.chevalier.estEquipe != null and !session.chevalier.estEquipe)} ? 'disabled' : ''">
+                <article class="area-card" th:classappend="${session.chevalierName == null} ? 'disabled' : ''">
                     <h4>Champ de bataille</h4>
                     <p>Affrontez vos ennemis</p>
-                    <a th:href="@{/champ-de-bataille}" class="btn-primary" th:if="${session.chevalier != null and session.chevalier.estEquipe != null and session.chevalier.estEquipe}">Entrer</a>
-                    <span class="btn-disabled" th:if="${session.chevalier == null or session.chevalier.estEquipe == null or !session.chevalier.estEquipe}">Équipement requis</span>
+                    <a th:href="@{/champ-de-bataille}" class="btn-primary" th:if="${session.chevalierName != null}">Entrer</a>
+                    <span class="btn-disabled" th:if="${session.chevalierName == null}">Équipement requis</span>
                 </article>
                 
                 <article class="area-card">

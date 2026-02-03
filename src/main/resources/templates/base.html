@@ -11,13 +11,13 @@
     <header>
         <div class="banner">
             <h1>Château de Valdrak</h1>
-            <div class="user-info" th:if="${session.chevalier}">
-                <span th:text="${session.chevalier.nom}">Chevalier</span>
+            <div class="user-info" th:if="${session.chevalierName}">
+                <span th:text="${session.chevalierName}">Chevalier</span>
                 <a th:href="@{/logout}" class="btn-logout">Quitter</a>
             </div>
         </div>
         
-        <nav th:if="${session.chevalier}">
+        <nav th:if="${session.chevalierName}">
             <ul>
                 <li><a th:href="@{/}" th:classappend="${#strings.equals(activePage, 'home')} ? 'active' : ''">Cour du château</a></li>
                 <li><a th:href="@{/armurerie}" th:classappend="${#strings.equals(activePage, 'armurerie')} ? 'active' : ''">Armurerie</a></li>
