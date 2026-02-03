@@ -1,0 +1,168 @@
+@import url('base.css');
+
+.courtyard {
+    background: var(--color-parchment);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--color-gold);
+    position: relative;
+}
+
+.courtyard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    border-radius: 12px;
+    pointer-events: none;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--color-ink);
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(212, 175, 55, 0.3);
+}
+
+.guardian-greeting {
+    font-size: 1.3rem;
+    color: var(--color-ink);
+    font-style: italic;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border-left: 4px solid var(--color-gold);
+    border-radius: 4px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.castle-areas {
+    position: relative;
+    z-index: 1;
+}
+
+.castle-areas h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: var(--color-ink);
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.area-card {
+    background: linear-gradient(135deg, #fff 0%, var(--color-parchment-dark) 100%);
+    padding: 2.5rem;
+    border-radius: 10px;
+    border: 3px solid var(--color-gold);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.area-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.area-card:hover::before {
+    left: 100%;
+}
+
+.area-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    border-color: var(--color-gold-dark);
+}
+
+.area-card.disabled {
+    opacity: 0.5;
+    filter: grayscale(50%);
+    cursor: not-allowed;
+}
+
+.area-card.disabled:hover {
+    transform: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.area-card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    color: var(--color-ink);
+    margin-bottom: 1rem;
+}
+
+.area-card p {
+    font-size: 1.1rem;
+    color: var(--color-ink-faded);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.area-card .btn-primary,
+.area-card .btn-disabled {
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .courtyard {
+        padding: 2rem 1.5rem;
+    }
+    
+    .welcome-section h2 {
+        font-size: 1.8rem;
+    }
+    
+    .guardian-greeting {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+    
+    .castle-areas h3 {
+        font-size: 1.5rem;
+    }
+    
+    .areas-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .area-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .areas-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
